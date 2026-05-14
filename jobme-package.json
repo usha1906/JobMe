@@ -4,8 +4,8 @@
   "description": "AI-powered job search and resume tailoring for international students on OPT/visa",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

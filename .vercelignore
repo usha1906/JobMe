@@ -1,5 +1,5 @@
-index.js
-jobme-index.js
+server.js
+jobme-server.js
 setup-admin.js
 jobme-setup-admin.js
 package.json
