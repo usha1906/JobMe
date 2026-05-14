@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>JobMe — Land your job in America</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.min.js"></script>
+<style>
+:root {
+  --ink:#111014; --paper:#f7f4ee; --cream:#ede9df;
+  --accent:#e8ff47; --red:#ff3d2e; --blue:#1a3aff;
+  --muted:#8a8780; --border:#ddd9cf; --text:#1a1a1f;
+  --green:#1a6b3c; --green-bg:#e8f8ee;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+.screen{display:none;} .screen.active{display:block;}
+
+/* ── LANDING ── */
+#landing{background:var(--ink);min-height:100vh;position:relative;overflow:hidden;}
+.lg{position:absolute;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(232,255,71,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,255,71,.04) 1px,transparent 1px);background-size:60px 60px;}
+.li{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 32px 80px;}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:28px 0;}
+.logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#fff;}
+.logo span{color:var(--accent);}
+.nav-btns{display:flex;gap:12px;}
+.btn-ghost{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);background:none;border:1px solid rgba(255,255,255,.15);padding:8px 18px;border-radius:100px;cursor:pointer;transition:all .2s;}
+.btn-ghost:hover{border-color:rgba(255,255,255,.4);color:#fff;}
+.btn-yellow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--accent);border:none;padding:8px 18px;border-radius:100px;cursor:pointer;transition:all .2s;font-weight:500;}
+.btn-yellow:hover{background:#f0ff6e;}
+.hero{padding:80px 0 60px;}
+.htag{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(232,255,71,.3);padding:6px 14px;border-radius:100px;margin-bottom:28px;}
+.htag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.h1{font-family:'Playfair Display',serif;font-size:clamp(48px,7vw,92px);font-weight:900;color:#fff;line-height:.95;letter-spacing:-.02em;margin-bottom:28px;}
+.h1 em{font-style:italic;color:var(--accent);}
+.h1 .l2{display:block;padding-left:60px;}
+.h1 .l3{display:block;padding-left:120px;}
+.hsub{font-size:18px;color:rgba(255,255,255,.5);line-height:1.6;max-width:520px;margin-bottom:40px;}
+.hsub strong{color:rgba(255,255,255,.85);}
+.hcta{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:60px;}
+.cta-big{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--accent);border:none;padding:16px 32px;border-radius:8px;cursor:pointer;transition:all .2s;}
+.cta-big:hover{background:#f0ff6e;transform:translateY(-2px);box-shadow:0 12px 32px rgba(232,255,71,.25);}
+.cta-note{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.3);letter-spacing:.06em;}
+.hstats{display:flex;gap:40px;flex-wrap:wrap;padding-top:40px;border-top:1px solid rgba(255,255,255,.08);}
+.hsn{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--accent);line-height:1;}
+.hsl{font-size:12px;color:rgba(255,255,255,.4);margin-top:4px;}
+
+/* PRICING SECTION */
+.pricing-section{margin:60px 0;}
+.ps-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:#fff;text-align:center;margin-bottom:8px;}
+.ps-sub{font-size:15px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:40px;}
+.pricing-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.pcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:28px;transition:all .2s;}
+.pcard:hover{background:rgba(255,255,255,.07);}
+.pcard.featured{background:var(--accent);border-color:var(--accent);}
+.pcard-badge{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;}
+.pcard.featured .pcard-badge{color:rgba(0,0,0,.4);}
+.pcard-price{font-family:'Playfair Display',serif;font-size:44px;font-weight:900;color:#fff;line-height:1;margin-bottom:4px;}
+.pcard.featured .pcard-price{color:var(--ink);}
+.pcard-price span{font-size:16px;font-weight:400;}
+.pcard-period{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:20px;}
+.pcard.featured .pcard-period{color:rgba(0,0,0,.4);}
+.pcard-features{display:flex;flex-direction:column;gap:10px;}
+.pf{font-size:13px;color:rgba(255,255,255,.6);display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
+.pcard.featured .pf{color:rgba(0,0,0,.7);}
+.pf::before{content:'✓';color:var(--accent);font-weight:700;font-size:11px;margin-top:2px;flex-shrink:0;}
+.pcard.featured .pf::before{color:var(--ink);}
+.pf.no{color:rgba(255,255,255,.25);}
+.pf.no::before{content:'–';color:rgba(255,255,255,.2);}
+.pcard.featured .pf.no{color:rgba(0,0,0,.3);}
+.pcard.featured .pf.no::before{color:rgba(0,0,0,.2);}
+.pcard-cta{margin-top:24px;}
+.pc-btn{width:100%;padding:12px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;border:none;}
+.pc-btn.dark{background:var(--ink);color:var(--accent);}
+.pc-btn.dark:hover{background:#1a1a1f;}
+.pc-btn.outline{background:transparent;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2);}
+.pc-btn.outline:hover{border-color:rgba(255,255,255,.5);color:#fff;}
+.pc-btn.ink{background:var(--ink);color:var(--accent);}
+.pc-btn.ink:hover{background:#1a1a1f;}
+
+@media(max-width:640px){
+  .h1 .l2,.h1 .l3{padding-left:0;}
+  .pricing-cards{grid-template-columns:1fr;}
+}
+
+/* ── AUTH MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--ink);border:1px solid rgba(255,255,255,.1);border-radius:16px;width:100%;max-width:420px;padding:40px;animation:fadeUp .3s ease;position:relative;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.mc{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.3);font-size:20px;cursor:pointer;line-height:1;}
+.mc:hover{color:#fff;}
+.mey{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.mt{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:28px;}
+.field{margin-bottom:16px;}
+.field label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block;margin-bottom:8px;}
+.field input{width:100%;padding:12px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.field input:focus{border-color:var(--accent);}
+.field input::placeholder{color:rgba(255,255,255,.2);}
+.mbtn{width:100%;padding:14px;background:var(--accent);color:var(--ink);border:none;border-radius:8px;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:8px;}
+.mbtn:hover:not(:disabled){background:#f0ff6e;}
+.mbtn:disabled{opacity:.5;cursor:not-allowed;}
+.mswitch{text-align:center;margin-top:20px;font-size:13px;color:rgba(255,255,255,.4);}
+.mswitch a{color:var(--accent);text-decoration:none;cursor:pointer;}
+.merr{font-family:'DM Mono',monospace;font-size:11px;color:#ff6b6b;margin-top:10px;display:none;}
+
+/* ── APP ── */
+#app{min-height:100vh;background:var(--paper);}
+.app-nav{background:var(--ink);padding:0 32px;display:flex;justify-content:space-between;align-items:center;height:56px;position:sticky;top:0;z-index:50;}
+.app-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#fff;}
+.app-logo span{color:var(--accent);}
+.anr{display:flex;align-items:center;gap:14px;}
+.credits-pill{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);background:rgba(232,255,71,.1);border:1px solid rgba(232,255,71,.2);padding:4px 12px;border-radius:100px;cursor:pointer;transition:all .2s;}
+.credits-pill:hover{background:rgba(232,255,71,.2);}
+.email-pill{font-family:'DM Mono',monospace;font-size:11px;padding:4px 12px;border-radius:100px;cursor:pointer;transition:all .2s;}
+.email-pill.active{color:var(--green);background:var(--green-bg);border:1px solid #a3e8bc;}
+.email-pill.inactive{color:var(--muted);background:transparent;border:1px solid var(--border);}
+.email-pill.inactive:hover{border-color:var(--ink);}
+.au{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);}
+.alg{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.3);background:none;border:none;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
+.alg:hover{color:#fff;}
+.app-body{max-width:1000px;margin:0 auto;padding:40px 28px 80px;}
+
+/* ── ONBOARDING ── */
+.ob-ey{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.ob-t{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:32px;}
+.ob-t em{font-style:italic;color:var(--blue);}
+.steps-bar{display:flex;gap:8px;margin-bottom:40px;}
+.sb{flex:1;height:3px;background:var(--border);border-radius:2px;transition:background .3s;}
+.sb.done{background:var(--ink);}
+.sb.active{background:var(--accent);}
+.step-panel{display:none;animation:fadeUp .3s ease;}
+.step-panel.active{display:block;}
+.st{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.ss{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.5;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-row.one{grid-template-columns:1fr;}
+.fg{margin-bottom:16px;}
+.fl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px;}
+.fi{width:100%;padding:12px 16px;background:#fff;border:1.5px solid var(--border);border-radius:8px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.fi:focus{border-color:var(--ink);}
+.fi.sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23999' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.fi.ta{resize:vertical;min-height:100px;font-family:'DM Sans',sans-serif;}
+.rchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.rchip{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;padding:7px 14px;border-radius:100px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none;}
+.rchip:hover{border-color:var(--ink);color:var(--ink);}
+.rchip.sel{background:var(--ink);color:var(--accent);border-color:var(--ink);}
+.exp-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:18px;margin-bottom:12px;position:relative;}
+.exp-rm{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;line-height:1;}
+.exp-rm:hover{color:var(--red);}
+.add-btn{width:100%;padding:12px;background:none;border:1.5px dashed var(--border);border-radius:8px;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-bottom:24px;}
+.add-btn:hover{border-color:var(--ink);color:var(--ink);}
+.step-acts{display:flex;gap:12px;justify-content:flex-end;margin-top:32px;}
+.btn-back{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:12px 24px;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .15s;}
+.btn-back:hover{border-color:var(--ink);color:var(--ink);}
+.btn-next{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:12px 28px;border-radius:8px;border:none;background:var(--ink);color:var(--accent);cursor:pointer;transition:all .2s;}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.15);}
+.btn-next:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* ── DASHBOARD ── */
+.dh{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px;}
+.dg{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--ink);line-height:1.1;}
+.dg em{font-style:italic;}
+.dd{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.fchip{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none;}
+.fchip:hover{border-color:var(--ink);color:var(--ink);}
+.fchip.on{background:var(--ink);color:var(--accent);border-color:var(--ink);}
+.sbtn{width:100%;padding:16px;background:var(--ink);color:var(--accent);border:none;border-radius:8px;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-bottom:20px;letter-spacing:-.01em;}
+.sbtn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.18);}
+.sbtn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+.sbar{display:flex;align-items:center;gap:10px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 16px;margin-bottom:20px;}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+.sdot.on{background:#22c55e;box-shadow:0 0 6px #22c55e;animation:blink 1.4s infinite;}
+.sdot.ok{background:#22c55e;}
+.sdot.err{background:var(--red);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.dstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+.dstat{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:18px;text-align:center;}
+.dsn{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:var(--ink);line-height:1;}
+.dsl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+.jobs-list{display:flex;flex-direction:column;gap:12px;}
+.job-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s,transform .2s;animation:fadeUp .3s ease both;}
+.job-card:hover{border-color:var(--ink);transform:translateX(3px);}
+.jm{padding:22px 24px 16px;}
+.jt{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.jti{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);}
+.jco{font-size:13px;color:var(--muted);margin-top:2px;}
+.jco strong{color:var(--ink);}
+.jsal{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;background:var(--accent);color:var(--ink);padding:4px 12px;border-radius:6px;white-space:nowrap;height:fit-content;}
+.jtags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.jtag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:4px;border:1px solid var(--border);color:var(--muted);}
+.jtag.opt{background:var(--green-bg);color:var(--green);border-color:#a3e8bc;}
+.jtag.remote{background:#eef0ff;color:var(--blue);border-color:#c7d2fe;}
+.jtag.hot{background:#fff4f2;color:var(--red);border-color:#fecaca;}
+.jdesc{font-size:13px;color:#555;line-height:1.65;margin-bottom:12px;}
+.jfit{background:#f9f9f7;border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:16px;}
+.jfl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.jft{font-size:13px;color:var(--text);line-height:1.6;}
+.jfoot{border-top:1px solid var(--border);padding:14px 24px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#fafaf8;}
+.jbtn{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:9px 18px;border-radius:6px;cursor:pointer;transition:all .15s;text-decoration:none;border:none;display:inline-flex;align-items:center;gap:6px;}
+.jbtn.apply{background:var(--ink);color:var(--accent);}
+.jbtn.apply:hover{background:#1a1a1f;}
+.jbtn.resume{background:#fff;color:var(--ink);border:1.5px solid var(--ink);}
+.jbtn.resume:hover:not(:disabled){background:var(--accent);border-color:var(--accent);}
+.jbtn.resume:disabled{opacity:.5;cursor:not-allowed;}
+.jsrc{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);border:1px solid var(--border);padding:4px 10px;border-radius:4px;}
+.rpanel{display:none;border-top:1.5px dashed var(--border);padding:20px 24px;background:var(--cream);}
+.rpanel.open{display:block;animation:fadeUp .2s ease;}
+.rpl{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--ink);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.rpready{display:none;}
+.rplabel{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
+.rpprev{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;font-size:11px;color:#555;line-height:1.7;max-height:160px;overflow-y:auto;white-space:pre-wrap;font-family:'DM Mono',monospace;margin-bottom:14px;}
+.dlbtn{background:var(--green);color:#fff;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:10px 22px;border-radius:6px;border:none;cursor:pointer;transition:all .15s;}
+.dlbtn:hover{background:#155d34;}
+.empty-s{text-align:center;padding:80px 20px;color:var(--muted);}
+.empty-i{font-size:48px;display:block;margin-bottom:16px;}
+.empty-t{font-size:14px;line-height:1.7;}
+
+/* ── UPSELL BANNER ── */
+.upsell-banner{background:var(--ink);border-radius:12px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+.ub-left{}
+.ub-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+.ub-text{font-size:14px;color:#fff;font-weight:500;}
+.ub-sub{font-size:12px;color:rgba(255,255,255,.4);margin-top:3px;}
+.ub-btn{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:10px 20px;border-radius:8px;background:var(--accent);color:var(--ink);border:none;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.ub-btn:hover{background:#f0ff6e;}
+
+/* ── CREDITS / EMAIL MODALS ── */
+.cm{background:var(--paper);border-radius:16px;width:100%;max-width:480px;padding:40px;animation:fadeUp .3s ease;position:relative;}
+.cm .mc{color:var(--muted);}
+.cm .mc:hover{color:var(--ink);}
+.cm-t{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.cm-s{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.5;}
+.qty-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.qty-btn{flex:1;min-width:80px;padding:14px 12px;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;text-align:center;transition:all .15s;}
+.qty-btn:hover{border-color:var(--ink);}
+.qty-btn.sel{background:var(--ink);border-color:var(--ink);}
+.qn{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);display:block;}
+.qty-btn.sel .qn{color:var(--accent);}
+.qp{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;display:block;}
+.qty-btn.sel .qp{color:rgba(255,255,255,.4);}
+.qs{font-family:'DM Mono',monospace;font-size:9px;color:var(--green);margin-top:2px;display:block;}
+.qty-btn.sel .qs{color:var(--accent);}
+.pay-btn{width:100%;padding:15px;background:var(--ink);color:var(--accent);border:none;border-radius:8px;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.pay-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.pay-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.pay-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:center;margin-top:12px;}
+.email-plan{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;}
+.ep-price{font-family:'Playfair Display',serif;font-size:40px;font-weight:900;color:var(--ink);margin-bottom:4px;}
+.ep-price span{font-size:16px;font-weight:400;}
+.ep-period{font-size:13px;color:var(--muted);margin-bottom:18px;}
+.ep-features{display:flex;flex-direction:column;gap:8px;}
+.epf{font-size:13px;color:var(--text);display:flex;align-items:center;gap:8px;}
+.epf::before{content:'✓';color:var(--green);font-weight:700;font-size:11px;}
+.cancel-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--red);text-decoration:underline;cursor:pointer;display:block;text-align:center;margin-top:12px;}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- ═══ LANDING -->
+<div id="landing" class="screen active">
+  <div class="lg"></div>
+  <div class="li">
+    <nav class="nav">
+      <div class="logo">Job<span>Me</span></div>
+      <div class="nav-btns">
+        <button class="btn-ghost" onclick="openModal('login')">Log in</button>
+        <button class="btn-yellow" onclick="openModal('signup')">Get started free</button>
+      </div>
+    </nav>
+    <div class="hero">
+      <div class="htag">AI job search for international students</div>
+      <h1 class="h1">Land your<br/><em class="l2">dream job</em><br/><span class="l3">in America.</span></h1>
+      <p class="hsub">Daily AI-curated job matches filtered for <strong>OPT + H1B-friendly companies</strong>. One-click tailored resumes. Built for F1 students.</p>
+      <div class="hcta">
+        <button class="cta-big" onclick="openModal('signup')">Start for free →</button>
+        <span class="cta-note">Profile &amp; job search always free</span>
+      </div>
+      <div class="hstats">
+        <div><div class="hsn">Free</div><div class="hsl">Job search forever</div></div>
+        <div><div class="hsn">$1</div><div class="hsl">Per tailored resume</div></div>
+        <div><div class="hsn">$5</div><div class="hsl">Daily emails / month</div></div>
+      </div>
+    </div>
+
+    <div class="pricing-section">
+      <div class="ps-title">Simple, honest pricing</div>
+      <div class="ps-sub">Start free. Pay only for what you use.</div>
+      <div class="pricing-cards">
+        <!-- FREE -->
+        <div class="pcard">
+          <div class="pcard-badge">Free forever</div>
+          <div class="pcard-price"><span>$</span>0</div>
+          <div class="pcard-period">no credit card needed</div>
+          <div class="pcard-features">
+            <div class="pf">Profile setup</div>
+            <div class="pf">Unlimited job searches</div>
+            <div class="pf">See roles + why you fit</div>
+            <div class="pf">OPT + H1B filtering</div>
+            <div class="pf no">Resume downloads</div>
+            <div class="pf no">Daily email briefings</div>
+          </div>
+          <div class="pcard-cta"><button class="pc-btn outline" onclick="openModal('signup')">Get started →</button></div>
+        </div>
+        <!-- RESUME CREDITS -->
+        <div class="pcard featured">
+          <div class="pcard-badge">Pay as you go</div>
+          <div class="pcard-price"><span>$</span>1</div>
+          <div class="pcard-period">per tailored resume</div>
+          <div class="pcard-features">
+            <div class="pf">Everything in Free</div>
+            <div class="pf">AI resume tailored to each job</div>
+            <div class="pf">Download as .docx instantly</div>
+            <div class="pf">Buy 5, 10, or 25 at once</div>
+            <div class="pf no">Daily email briefings</div>
+          </div>
+          <div class="pcard-cta"><button class="pc-btn ink" onclick="openModal('signup')">Buy credits →</button></div>
+        </div>
+        <!-- EMAIL SUB -->
+        <div class="pcard">
+          <div class="pcard-badge">Monthly subscription</div>
+          <div class="pcard-price"><span>$</span>5</div>
+          <div class="pcard-period">per month · cancel anytime</div>
+          <div class="pcard-features">
+            <div class="pf">Everything in Free</div>
+            <div class="pf">6 curated roles every weekday</div>
+            <div class="pf">Direct apply links in email</div>
+            <div class="pf">9 AM Chicago delivery</div>
+            <div class="pf">Cancel anytime</div>
+          </div>
+          <div class="pcard-cta"><button class="pc-btn outline" onclick="openModal('signup')">Subscribe →</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ AUTH MODALS -->
+<div class="modal-bg" id="authModal">
+  <div class="modal" id="loginModal" style="display:none">
+    <button class="mc" onclick="closeModal()">×</button>
+    <div class="mey">Welcome back</div>
+    <div class="mt">Log in to JobMe</div>
+    <div class="field"><label>Email</label><input type="email" id="le" placeholder="you@email.com"/></div>
+    <div class="field"><label>Password</label><input type="password" id="lp" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="merr" id="lerr"></div>
+    <button class="mbtn" id="lbtn" onclick="doLogin()">Log in →</button>
+    <div class="mswitch">No account? <a onclick="switchModal('signup')">Sign up free</a></div>
+  </div>
+  <div class="modal" id="signupModal" style="display:none">
+    <button class="mc" onclick="closeModal()">×</button>
+    <div class="mey">Get started</div>
+    <div class="mt">Create your account</div>
+    <div class="field"><label>Full name</label><input type="text" id="sn" placeholder="Jane Doe"/></div>
+    <div class="field"><label>Email</label><input type="email" id="se" placeholder="you@email.com"/></div>
+    <div class="field"><label>Password</label><input type="password" id="sp" placeholder="8+ characters" onkeydown="if(event.key==='Enter')doSignup()"/></div>
+    <div class="merr" id="serr"></div>
+    <button class="mbtn" id="sbtn" onclick="doSignup()">Create free account →</button>
+    <div class="mswitch">Already have an account? <a onclick="switchModal('login')">Log in</a></div>
+  </div>
+</div>
+
+<!-- ═══ APP -->
+<div id="app" class="screen">
+  <nav class="app-nav">
+    <div class="app-logo">Job<span>Me</span></div>
+    <div class="anr">
+      <div class="credits-pill" id="creditsPill" onclick="openCreditsModal()">— credits</div>
+      <div class="email-pill inactive" id="emailPill" onclick="openEmailModal()">📧 Daily emails</div>
+      <div class="au" id="userName"></div>
+      <button class="alg" onclick="doLogout()">Log out</button>
+    </div>
+  </nav>
+  <div class="app-body">
+    <!-- ONBOARDING -->
+    <div id="onboarding">
+      <div class="ob-ey" id="obStep">Step 1 of 3</div>
+      <div class="ob-t">Set up your <em>profile</em></div>
+      <div class="steps-bar">
+        <div class="sb active" id="sb0"></div>
+        <div class="sb" id="sb1"></div>
+        <div class="sb" id="sb2"></div>
+      </div>
+      <!-- Step 0 -->
+      <div class="step-panel active" id="s0">
+        <div class="st">Basic info</div>
+        <div class="ss">Tell us where you are and what you're looking for.</div>
+        <div class="form-row">
+          <div class="fg"><label class="fl">Location</label><input class="fi" id="p0" placeholder="Chicago, IL"/></div>
+          <div class="fg"><label class="fl">Visa Type</label><select class="fi sel" id="p1"><option value="F1 OPT">F1 OPT</option><option value="F1 STEM OPT">F1 STEM OPT</option><option value="H1B">H1B</option><option value="Green Card">Green Card</option><option value="US Citizen">US Citizen</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label class="fl">Min Salary ($)</label><input class="fi" id="p2" type="number" value="100000"/></div>
+          <div class="fg"><label class="fl">Max Salary ($)</label><input class="fi" id="p3" type="number" value="140000"/></div>
+        </div>
+        <div class="fg"><label class="fl">Remote preference</label><select class="fi sel" id="p4"><option value="hybrid">Open to hybrid</option><option value="remote">Remote only</option><option value="onsite">On-site is fine</option></select></div>
+        <div class="fg">
+          <label class="fl">Target roles (select all that apply)</label>
+          <div class="rchips">
+            <div class="rchip sel" data-role="AI Engineer">AI Engineer</div>
+            <div class="rchip sel" data-role="Full-Stack AI Engineer">Full-Stack AI</div>
+            <div class="rchip sel" data-role="Backend Engineer">Backend Engineer</div>
+            <div class="rchip" data-role="Founding Engineer">Founding Engineer</div>
+            <div class="rchip" data-role="LLM Engineer">LLM Engineer</div>
+            <div class="rchip" data-role="Software Engineer">Software Engineer</div>
+            <div class="rchip" data-role="Data Engineer">Data Engineer</div>
+            <div class="rchip" data-role="ML Engineer">ML Engineer</div>
+          </div>
+        </div>
+        <div class="step-acts"><button class="btn-next" onclick="nextStep()">Next: Skills →</button></div>
+      </div>
+      <!-- Step 1 -->
+      <div class="step-panel" id="s1">
+        <div class="st">Your skills</div>
+        <div class="ss">Comma-separated. The AI uses this to match roles and tailor your resume.</div>
+        <div class="fg form-row one"><textarea class="fi ta" id="p5" placeholder="Python, TypeScript, React, Node.js, AWS, Docker, PostgreSQL, LLM systems..." style="min-height:120px;"></textarea></div>
+        <div class="step-acts"><button class="btn-back" onclick="prevStep()">← Back</button><button class="btn-next" onclick="nextStep()">Next: Experience →</button></div>
+      </div>
+      <!-- Step 2 -->
+      <div class="step-panel" id="s2">
+        <div class="st">Work experience</div>
+        <div class="ss">Add your jobs. The AI uses these bullets to tailor your resume for each application.</div>
+        <div id="expList"></div>
+        <button class="add-btn" onclick="addExp()">+ Add experience</button>
+        <div class="step-acts"><button class="btn-back" onclick="prevStep()">← Back</button><button class="btn-next" id="finBtn" onclick="saveProfile()">Finish setup →</button></div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" style="display:none">
+      <!-- Email upsell banner (shown if not subscribed) -->
+      <div class="upsell-banner" id="emailBanner" style="display:none">
+        <div class="ub-left">
+          <div class="ub-label">✉ Daily email briefing</div>
+          <div class="ub-text">Get 6 matched roles in your inbox every morning</div>
+          <div class="ub-sub">6 curated roles · 9 AM Chicago · OPT-filtered · $5/month</div>
+        </div>
+        <button class="ub-btn" onclick="openEmailModal()">Subscribe for $5/mo →</button>
+      </div>
+
+      <div class="dh">
+        <div><div class="dg" id="dashG">Good morning, <em>—</em></div><div class="dd" id="dashD"></div></div>
+      </div>
+      <div class="filters">
+        <div class="fchip on" data-f="ai">AI Engineer</div>
+        <div class="fchip on" data-f="fullstack">Full-Stack AI</div>
+        <div class="fchip on" data-f="backend">Backend</div>
+        <div class="fchip" data-f="founding">Founding Eng</div>
+        <div class="fchip on" data-f="opt">OPT-Friendly</div>
+        <div class="fchip" data-f="remote">Remote Only</div>
+        <div class="fchip" data-f="startup">Startups Only</div>
+      </div>
+      <button class="sbtn" id="searchBtn" onclick="runSearch()">⚡ Find Today's Best Roles</button>
+      <div class="sbar"><div class="sdot" id="sdot"></div><span id="stxt">Ready — hit the button to search</span></div>
+      <div class="dstats" id="dstats" style="display:none">
+        <div class="dstat"><div class="dsn" id="sTotal">0</div><div class="dsl">Roles Found</div></div>
+        <div class="dstat"><div class="dsn" id="sOpt">0</div><div class="dsl">OPT Friendly</div></div>
+        <div class="dstat"><div class="dsn" id="sHot">0</div><div class="dsl">Hot 🔥</div></div>
+      </div>
+      <div class="jobs-list" id="jobsList">
+        <div class="empty-s"><span class="empty-i">🎯</span><div class="empty-t">Your AI agent finds roles matched to your profile.<br/>Job search is <strong>always free</strong>. Generate tailored resumes for <strong>$1 each</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CREDITS MODAL -->
+<div class="modal-bg" id="creditsModal">
+  <div class="cm">
+    <button class="mc" onclick="document.getElementById('creditsModal').classList.remove('open')">×</button>
+    <div class="cm-t">Buy resume credits</div>
+    <div class="cm-s">Each credit = one AI-tailored .docx resume for a specific job. Use them any time, they don't expire.</div>
+    <div class="qty-row">
+      <div class="qty-btn" data-qty="5" onclick="selQty(this)"><span class="qn">5</span><span class="qp">$5.00</span><span class="qs"> </span></div>
+      <div class="qty-btn sel" data-qty="10" onclick="selQty(this)"><span class="qn">10</span><span class="qp">$10.00</span><span class="qs">Most popular</span></div>
+      <div class="qty-btn" data-qty="25" onclick="selQty(this)"><span class="qn">25</span><span class="qp">$25.00</span><span class="qs">Best value</span></div>
+    </div>
+    <button class="pay-btn" id="buyBtn" onclick="buyCredits()">Pay with card →</button>
+    <div class="pay-note">Powered by Stripe · Secure · Credits don't expire</div>
+  </div>
+</div>
+
+<!-- ═══ EMAIL MODAL -->
+<div class="modal-bg" id="emailModal">
+  <div class="cm">
+    <button class="mc" onclick="document.getElementById('emailModal').classList.remove('open')">×</button>
+    <div id="emailModalContent">
+      <!-- filled by JS based on sub status -->
+    </div>
+  </div>
+</div>
+
+<script>
+const API = "http://localhost:3000";
+
+let token = localStorage.getItem("jm_t")||"";
+let user  = null, profile = null, step = 0, selQtyVal = 10;
+const filters = new Set(["ai","fullstack","backend","opt"]);
+
+// ── Boot ──
+(async()=>{
+  if(token){const d=await api("GET","/api/me");if(d?.ok){user=d.user;profile=d.profile;showApp();return;}}
+  showLanding();
+})();
+
+function showLanding(){ document.getElementById("landing").classList.add("active"); document.getElementById("app").classList.remove("active"); }
+function showApp(){
+  document.getElementById("landing").classList.remove("active");
+  document.getElementById("app").classList.add("active");
+  document.getElementById("userName").textContent = user.name.split(" ")[0];
+  updateTopBar();
+  profile ? showDashboard() : showOnboarding();
+  const p=new URLSearchParams(window.location.search);
+  if(p.get("payment")==="credits"){const q=parseInt(p.get("qty")||0);if(q)alert(`✅ ${q} resume credits added!`);window.history.replaceState({},"",window.location.pathname);}
+  if(p.get("payment")==="email_sub"){alert("✅ Email subscription active! You'll get your first briefing tomorrow morning.");api("GET","/api/me").then(d=>{if(d?.ok){user=d.user;updateTopBar();}});window.history.replaceState({},"",window.location.pathname);}
+}
+
+// ── Top bar ──
+function updateTopBar(){
+  document.getElementById("creditsPill").textContent = `${user.credits} credits`;
+  const ep=document.getElementById("emailPill");
+  if(user.email_sub){ep.className="email-pill active";ep.textContent="📧 Emails on";}
+  else{ep.className="email-pill inactive";ep.textContent="📧 Daily emails";}
+}
+
+// ── Auth ──
+function openModal(t){document.getElementById("authModal").classList.add("open");switchModal(t);}
+function closeModal(){document.getElementById("authModal").classList.remove("open");}
+function switchModal(t){document.getElementById("loginModal").style.display=t==="login"?"block":"none";document.getElementById("signupModal").style.display=t==="signup"?"block":"none";}
+document.getElementById("authModal").addEventListener("click",e=>{if(e.target===document.getElementById("authModal"))closeModal();});
+
+async function doSignup(){
+  const btn=document.getElementById("sbtn"),name=document.getElementById("sn").value.trim(),email=document.getElementById("se").value.trim(),pw=document.getElementById("sp").value;
+  if(!name||!email||!pw)return showErr("serr","All fields required");
+  btn.disabled=true;btn.textContent="Creating...";
+  const d=await api("POST","/api/signup",{name,email,password:pw});
+  if(d?.ok){token=d.token;localStorage.setItem("jm_t",token);user=d.user;closeModal();showApp();}
+  else{showErr("serr",d?.error||"Error");btn.disabled=false;btn.textContent="Create free account →";}
+}
+async function doLogin(){
+  const btn=document.getElementById("lbtn"),email=document.getElementById("le").value.trim(),pw=document.getElementById("lp").value;
+  if(!email||!pw)return showErr("lerr","Email and password required");
+  btn.disabled=true;btn.textContent="Logging in...";
+  const d=await api("POST","/api/login",{email,password:pw});
+  if(d?.ok){token=d.token;localStorage.setItem("jm_t",token);user=d.user;const m=await api("GET","/api/me");if(m?.ok){user=m.user;profile=m.profile;}closeModal();showApp();}
+  else{showErr("lerr",d?.error||"Invalid credentials");btn.disabled=false;btn.textContent="Log in →";}
+}
+function doLogout(){token="";localStorage.removeItem("jm_t");user=null;profile=null;showLanding();}
+function showErr(id,msg){const e=document.getElementById(id);e.textContent=msg;e.style.display="block";setTimeout(()=>e.style.display="none",4000);}
+
+// ── Onboarding ──
+let ec=0;
+function showOnboarding(){document.getElementById("onboarding").style.display="block";document.getElementById("dashboard").style.display="none";addExp();updateStepUI();}
+function updateStepUI(){
+  document.querySelectorAll(".step-panel").forEach((p,i)=>p.classList.toggle("active",i===step));
+  document.querySelectorAll(".sb").forEach((s,i)=>{s.classList.toggle("active",i===step);s.classList.toggle("done",i<step);});
+  document.getElementById("obStep").textContent=`Step ${step+1} of 3`;
+}
+function nextStep(){if(step<2){step++;updateStepUI();}}
+function prevStep(){if(step>0){step--;updateStepUI();}}
+document.querySelectorAll(".rchip").forEach(c=>c.addEventListener("click",()=>c.classList.toggle("sel")));
+
+function addExp(){
+  const id=ec++;
+  const d=document.createElement("div");d.className="exp-card";d.id=`ex${id}`;
+  d.innerHTML=`<button class="exp-rm" onclick="document.getElementById('ex${id}').remove()">×</button>
+    <div class="form-row"><div class="fg"><label class="fl">Company</label><input class="fi" id="ec${id}" placeholder="Acme Inc"/></div><div class="fg"><label class="fl">Location</label><input class="fi" id="el${id}" placeholder="Chicago, IL"/></div></div>
+    <div class="form-row"><div class="fg"><label class="fl">Role</label><input class="fi" id="er${id}" placeholder="Software Engineer"/></div><div class="fg"><label class="fl">Dates</label><input class="fi" id="ed${id}" placeholder="Jan 2023 – Present"/></div></div>
+    <div class="fg"><label class="fl">Key bullets (one per line)</label><textarea class="fi ta" id="eb${id}" placeholder="Built X using Y, improving Z by N%..." style="min-height:90px;"></textarea></div>`;
+  document.getElementById("expList").appendChild(d);
+}
+
+async function saveProfile(){
+  const btn=document.getElementById("finBtn");btn.disabled=true;btn.textContent="Saving...";
+  const roles=[...document.querySelectorAll(".rchip.sel")].map(c=>c.dataset.role);
+  const experience=[];
+  document.querySelectorAll(".exp-card").forEach(card=>{
+    const id=card.id.replace("ex","");
+    const company=document.getElementById(`ec${id}`)?.value?.trim();if(!company)return;
+    experience.push({company,location:document.getElementById(`el${id}`)?.value?.trim()||"",role:document.getElementById(`er${id}`)?.value?.trim()||"",dates:document.getElementById(`ed${id}`)?.value?.trim()||"",bullets:(document.getElementById(`eb${id}`)?.value||"").split("\n").map(b=>b.trim()).filter(Boolean)});
+  });
+  const pd={location:document.getElementById("p0").value.trim()||"Chicago, IL",visa_type:document.getElementById("p1").value,target_roles:roles,skills:document.getElementById("p5").value.trim(),experience,salary_min:parseInt(document.getElementById("p2").value)||100000,salary_max:parseInt(document.getElementById("p3").value)||140000,remote_pref:document.getElementById("p4").value};
+  const d=await api("POST","/api/profile",pd);
+  if(d?.ok){profile=pd;showDashboard();}
+  else{btn.disabled=false;btn.textContent="Finish setup →";alert("Error: "+(d?.error||"unknown"));}
+}
+
+// ── Dashboard ──
+function showDashboard(){
+  document.getElementById("onboarding").style.display="none";
+  document.getElementById("dashboard").style.display="block";
+  const h=new Date().getHours(),g=h<12?"Good morning":h<17?"Good afternoon":"Good evening";
+  document.getElementById("dashG").innerHTML=`${g}, <em>${user.name.split(" ")[0]}</em>`;
+  document.getElementById("dashD").textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+  document.getElementById("emailBanner").style.display=user.email_sub?"none":"flex";
+}
+
+document.querySelectorAll(".fchip").forEach(c=>c.addEventListener("click",()=>{const f=c.dataset.f;if(filters.has(f)){filters.delete(f);c.classList.remove("on");}else{filters.add(f);c.classList.add("on");}}));
+
+function setSt(msg,state="idle"){
+  document.getElementById("stxt").textContent=msg;
+  const d=document.getElementById("sdot");
+  d.className="sdot"+(state==="loading"?" on":state==="done"?" ok":state==="error"?" err":"");
+}
+
+async function runSearch(){
+  const btn=document.getElementById("searchBtn");btn.disabled=true;btn.textContent="⏳ Searching...";
+  setSt("Browsing job boards...","loading");
+  document.getElementById("dstats").style.display="none";
+  document.getElementById("jobsList").innerHTML=`<div class="empty-s"><span class="empty-i">🔍</span><div class="empty-t">Agent searching Wellfound, LinkedIn, Greenhouse...<br/>~20–30 seconds.</div></div>`;
+  const d=await api("POST","/api/jobs",{filters:[...filters]});
+  if(!d?.ok){setSt("Error: "+(d?.error||"unknown"),"error");document.getElementById("jobsList").innerHTML=`<div class="empty-s"><span class="empty-i">⚠️</span><div class="empty-t">${d?.error||"Something went wrong"}</div></div>`;btn.disabled=false;btn.textContent="⚡ Try Again";return;}
+  renderJobs(d.jobs);setSt(`Found ${d.jobs.length} roles matched to your profile`,"done");btn.disabled=false;btn.textContent="⚡ Refresh Search";
+}
+
+function renderJobs(jobs){
+  document.getElementById("sTotal").textContent=jobs.length;
+  document.getElementById("sOpt").textContent=jobs.filter(j=>j.opt_friendly).length;
+  document.getElementById("sHot").textContent=jobs.filter(j=>j.hot).length;
+  document.getElementById("dstats").style.display="grid";
+  const list=document.getElementById("jobsList");list.innerHTML="";
+  jobs.forEach((job,i)=>{
+    const tags=[job.opt_friendly?`<span class="jtag opt">✓ OPT</span>`:"",job.remote?`<span class="jtag remote">Remote</span>`:"",job.hot?`<span class="jtag hot">🔥 Hot</span>`:"",job.location?`<span class="jtag">${job.location}</span>`:"",job.source?`<span class="jtag">${job.source}</span>`:""].filter(Boolean).join("");
+    const card=document.createElement("div");card.className="job-card";card.style.animationDelay=(i*.06)+"s";card.dataset.job=JSON.stringify(job);
+    card.innerHTML=`
+      <div class="jm">
+        <div class="jt">
+          <div><div class="jti">${job.title||"Role"}</div><div class="jco"><strong>${job.company||""}</strong>${job.location?" · "+job.location:""}</div></div>
+          ${job.salary?`<div class="jsal">${job.salary}</div>`:""}
+        </div>
+        <div class="jtags">${tags}</div>
+        ${job.description?`<div class="jdesc">${job.description}</div>`:""}
+        ${job.why_fit?`<div class="jfit"><div class="jfl">Why you fit</div><div class="jft">${job.why_fit}</div></div>`:""}
+      </div>
+      <div class="jfoot">
+        ${job.apply_url?`<a class="jbtn apply" href="${job.apply_url}" target="_blank" rel="noopener">Apply →</a>`:""}
+        <button class="jbtn resume" onclick="generateResume(this,${i})">📄 Generate Resume ($1)</button>
+        ${job.source?`<span class="jsrc">${job.source}</span>`:""}
+      </div>
+      <div class="rpanel" id="rp${i}">
+        <div class="rpl" id="rl${i}"><div class="spinner"></div>Tailoring resume — using 1 credit...</div>
+        <div class="rpready" id="rr${i}">
+          <div class="rplabel">✓ Resume ready</div>
+          <div class="rpprev" id="rpv${i}"></div>
+          <button class="dlbtn" id="rdl${i}">⬇ Download .docx</button>
+        </div>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+async function generateResume(btn,idx){
+  if(user.credits<1){openCreditsModal();return;}
+  btn.disabled=true;btn.textContent="⏳ Tailoring...";
+  const card=btn.closest(".job-card"),job=JSON.parse(card.dataset.job);
+  document.getElementById(`rp${idx}`).classList.add("open");
+  document.getElementById(`rl${idx}`).style.display="flex";
+  document.getElementById(`rr${idx}`).style.display="none";
+  const d=await api("POST","/api/resume",{job});
+  if(!d?.ok){
+    if(d?.error==="no_credits")openCreditsModal();
+    else document.getElementById(`rl${idx}`).innerHTML=`<span style="color:var(--red);font-family:'DM Mono',monospace;font-size:11px">Error: ${d?.error||"unknown"}</span>`;
+    btn.disabled=false;btn.textContent="📄 Generate Resume ($1)";return;
+  }
+  user.credits=d.credits;updateTopBar();
+  const r=d.resume;
+  document.getElementById(`rpv${idx}`).textContent=`SUMMARY\n${r.summary}\n\nSKILLS\n${r.skills.map(s=>s.label+": "+s.value).join("\n")}\n\nEXPERIENCE\n${r.experience.map(e=>e.company+" | "+e.role+"\n"+e.bullets.map(b=>"– "+b).join("\n")).join("\n\n")}`;
+  document.getElementById(`rl${idx}`).style.display="none";
+  document.getElementById(`rr${idx}`).style.display="block";
+  document.getElementById(`rdl${idx}`).onclick=()=>downloadDocx(r,job);
+  btn.textContent="✓ Resume Ready";
+}
+
+// ── Credits modal ──
+function openCreditsModal(){document.getElementById("creditsModal").classList.add("open");}
+document.getElementById("creditsModal").addEventListener("click",e=>{if(e.target===document.getElementById("creditsModal"))document.getElementById("creditsModal").classList.remove("open");});
+function selQty(el){document.querySelectorAll(".qty-btn").forEach(b=>b.classList.remove("sel"));el.classList.add("sel");selQtyVal=parseInt(el.dataset.qty);document.getElementById("buyBtn").textContent=`Pay $${selQtyVal}.00 →`;}
+selQty(document.querySelector(".qty-btn.sel"));
+async function buyCredits(){
+  const btn=document.getElementById("buyBtn");btn.disabled=true;btn.textContent="Redirecting...";
+  const d=await api("POST","/api/buy-credits",{quantity:selQtyVal});
+  if(d?.ok&&d.url)window.location.href=d.url;
+  else{alert("Error: "+(d?.error||"unknown"));btn.disabled=false;selQty(document.querySelector(".qty-btn.sel"));}
+}
+
+// ── Email modal ──
+function openEmailModal(){
+  const c=document.getElementById("emailModalContent");
+  if(user.email_sub){
+    c.innerHTML=`
+      <div class="mey">Email subscription</div>
+      <div class="mt">You're subscribed ✓</div>
+      <div style="background:var(--green-bg);border:1px solid #a3e8bc;border-radius:10px;padding:16px;margin-bottom:20px;font-size:14px;color:var(--green);line-height:1.6;">
+        6 curated roles emailed every weekday at 9 AM Chicago time.
+      </div>
+      <a class="cancel-link" onclick="cancelEmailSub()">Cancel subscription</a>`;
+  } else {
+    c.innerHTML=`
+      <div class="mey">Daily email briefing</div>
+      <div class="mt">Get jobs in your inbox</div>
+      <div class="email-plan">
+        <div class="ep-price"><span>$</span>5</div>
+        <div class="ep-period">per month · cancel anytime</div>
+        <div class="ep-features">
+          <div class="epf">6 AI-curated roles every weekday morning</div>
+          <div class="epf">Filtered for OPT + H1B-friendly companies</div>
+          <div class="epf">Direct apply links</div>
+          <div class="epf">Delivered 9 AM Chicago time</div>
+          <div class="epf">Cancel anytime — no commitment</div>
+        </div>
+      </div>
+      <button class="pay-btn" id="subBtn" onclick="subscribeEmail()">Subscribe for $5/month →</button>
+      <div class="pay-note">Powered by Stripe · Cancel anytime</div>`;
+  }
+  document.getElementById("emailModal").classList.add("open");
+}
+document.getElementById("emailModal").addEventListener("click",e=>{if(e.target===document.getElementById("emailModal"))document.getElementById("emailModal").classList.remove("open");});
+async function subscribeEmail(){
+  const btn=document.getElementById("subBtn");btn.disabled=true;btn.textContent="Redirecting...";
+  const d=await api("POST","/api/subscribe-email");
+  if(d?.ok&&d.url)window.location.href=d.url;
+  else{alert("Error: "+(d?.error||"unknown"));btn.disabled=false;btn.textContent="Subscribe for $5/month →";}
+}
+async function cancelEmailSub(){
+  if(!confirm("Cancel your daily email subscription?"))return;
+  const d=await api("POST","/api/cancel-email-sub");
+  if(d?.ok){user.email_sub=false;updateTopBar();document.getElementById("emailBanner").style.display="flex";document.getElementById("emailModal").classList.remove("open");}
+  else alert("Error: "+(d?.error||"unknown"));
+}
+
+// ── API ──
+async function api(m,p,b){try{const o={method:m,headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},credentials:"include"};if(b)o.body=JSON.stringify(b);const r=await fetch(API+p,o);return await r.json();}catch(e){console.error(e);return null;}}
+
+// ── Download DOCX ──
+async function downloadDocx(resume,job){
+  const{Document,Packer,Paragraph,TextRun,AlignmentType,LevelFormat,ExternalHyperlink,BorderStyle,TabStopType}=docx;
+  const F="Calibri",W=10800;
+  const sh=t=>new Paragraph({spacing:{before:180,after:40},border:{bottom:{style:BorderStyle.SINGLE,size:1,color:"333333",space:1}},children:[new TextRun({text:t.toUpperCase(),font:F,size:21,bold:true})]});
+  const jh=(c,l)=>new Paragraph({spacing:{before:130,after:0},tabStops:[{type:TabStopType.RIGHT,position:W}],children:[new TextRun({text:c,font:F,size:20,bold:true}),new TextRun({text:"\t"+(l||""),font:F,size:20})]});
+  const jr=(r,d)=>new Paragraph({spacing:{before:0,after:28},tabStops:[{type:TabStopType.RIGHT,position:W}],children:[new TextRun({text:r,font:F,size:20,italics:true}),new TextRun({text:"\t"+(d||""),font:F,size:20})]});
+  const bl=t=>new Paragraph({numbering:{reference:"bullets",level:0},spacing:{before:12,after:12},children:[new TextRun({text:t,font:F,size:20})]});
+  const sl=(l,v)=>new Paragraph({spacing:{before:0,after:14},children:[new TextRun({text:l+": ",font:F,size:20,bold:true}),new TextRun({text:v,font:F,size:20})]});
+  const ch=[
+    new Paragraph({alignment:AlignmentType.CENTER,spacing:{after:0},children:[new TextRun({text:user.name,font:F,size:28,bold:true})]}),
+    new Paragraph({alignment:AlignmentType.CENTER,spacing:{before:30,after:0},children:[new TextRun({text:(profile?.location||""),font:F,size:18})]}),
+    sh("Summary"),new Paragraph({spacing:{before:28,after:0},children:[new TextRun({text:resume.summary,font:F,size:20})]}),
+    sh("Skills"),...resume.skills.map(s=>sl(s.label,s.value)),
+    sh("Experience"),...resume.experience.flatMap(e=>[jh(e.company,e.location),jr(e.role,e.dates),...e.bullets.map(b=>bl(b))]),
+    sh("Projects"),...resume.projects.flatMap(p=>[new Paragraph({spacing:{before:90,after:26},children:[new TextRun({text:p.name,font:F,size:20,bold:true}),p.url?new TextRun({text:"  ("+p.url+")",font:F,size:20}):new TextRun({text:""})]}), ...p.bullets.map(b=>bl(b))]),
+    sh("Education"),...resume.education.flatMap(e=>[jh(e.school,e.location),jr(e.degree,e.dates)])
+  ];
+  const doc2=new Document({numbering:{config:[{reference:"bullets",levels:[{level:0,format:LevelFormat.BULLET,text:"\u2013",alignment:AlignmentType.LEFT,style:{paragraph:{indent:{left:360,hanging:360}}}}]}]},sections:[{properties:{page:{size:{width:12240,height:15840},margin:{top:620,right:720,bottom:620,left:720}}},children:ch}]});
+  const blob=await Packer.toBlob(doc2);
+  const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=`Resume_${(job.company||"Role").replace(/\s+/g,"_")}.docx`;a.click();URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
