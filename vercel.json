@@ -1,0 +1,5 @@
+{
+  "installCommand": "echo skip",
+  "buildCommand": "echo skip",
+  "rewrites": [{ "source": "/(.*)", "destination": "/jobme.html" }]
+}
